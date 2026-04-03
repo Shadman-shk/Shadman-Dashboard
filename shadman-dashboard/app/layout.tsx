@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import {Inter} from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import { Inter, The_Girl_Next_Door } from "next/font/google";
 import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
+import { ThemeProvider } from "@/components/ui/theme-provider";
+import { Toaster } from "sonner";
 
-const inter = Inter ({subsets:['latin']});
+const inter = Inter({ subsets: ['latin'] });
 
 
 export const metadata: Metadata = {
@@ -12,23 +15,33 @@ export const metadata: Metadata = {
   description: "A platform for users to suggest and vote on features, report bugs, and provide feedback to developers.",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        {/* <Navbar /> */}
-        <Navbar />
-        {/*Main section*/}
-        <main className="flex-1 container mx-auto px-4 py-8">
-          {children}
-        </main>
-        {/*Footer */}
-        <Footer />
-        </body>
+        <ClerkProvider>
+          <ThemeProvider 
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange>
+            {/* Navbar */}
+            <Navbar />
+            {/* Main section */}
+            <main className="container mx-auto px-4 py-8">{children}</main>
+            {/* Footer */}
+            <Footer />
+            <Toaster />
+          </ThemeProvider>
+        </ClerkProvider>
+      </body>
     </html>
   );
+
 }
