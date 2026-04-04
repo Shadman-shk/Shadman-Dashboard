@@ -69,6 +69,22 @@ export default function HomePage() {
         </div>
       </section>
       {/* Stats Section */}
+      <section className="text-center">
+        <div className="inline-grid grid-cols-3 gap-8">
+          <div>
+            <div className="text-3xl font-bold"> 1,256+</div>
+            <div className="text-muted-foreground"> Suggestions</div>
+          </div>
+          <div>
+            <div className="text-3xl font-bold"> 8,901+</div>
+            <div className="text-muted-foreground"> VOtes Cast</div>
+          </div>
+          <div>
+            <div className="text-3xl font-bold"> 256+</div>
+            <div className="text-muted-foreground"> Features Shipped</div>
+          </div>
+        </div>
+      </section>
     </div >
 
   );
