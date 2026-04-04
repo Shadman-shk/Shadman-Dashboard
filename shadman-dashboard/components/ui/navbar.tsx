@@ -1,3 +1,4 @@
+"use client";
 import { Map, MessageSquare, Sparkle } from "lucide-react";
 import Link from "next/dist/client/link";
 import ThemeToggle from "./theme-toggle";
