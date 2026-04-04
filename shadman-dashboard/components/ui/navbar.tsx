@@ -1,7 +1,8 @@
+"use client";
 import { Map, MessageSquare, Sparkle } from "lucide-react";
 import Link from "next/dist/client/link";
 import ThemeToggle from "./theme-toggle";
-import { SignInButton } from "@clerk/nextjs";;
+import { SignInButton, UserButton } from "@clerk/nextjs";;
 import { Button } from "./button";
 
 export default function Navbar() {
@@ -34,6 +35,7 @@ export default function Navbar() {
                                 Sign In
                             </Button>
                         </SignInButton>
+                        <UserButton />
                     </div>
                 </div>
             </div>
