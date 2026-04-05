@@ -20,3 +20,5 @@ export function GradientHeader({title, subtitle,children}:GradientHeaderProprs){
     );
 
 };
+
+export default GradientHeader;
