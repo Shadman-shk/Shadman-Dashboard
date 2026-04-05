@@ -9,7 +9,7 @@ import { getCategoryDesign } from "@/app/data/category-data";
 import { Badge } from "@/components/ui/badge";
 import FeedbackList from "@/components/ui/feedback-list";
 
-export default async function FeedbackPage() {
+export default async function NewFeedbackPage() {
     // Get the userId from clerk auth
     const { userId } = await auth();
 
