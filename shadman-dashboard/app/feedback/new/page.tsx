@@ -8,6 +8,8 @@ import { CATEGORIES_TYPES } from "@/app/data/category-data";
 import { Textarea } from "@/components/ui/textarea";
 import { useActionState } from "react";
 import { toast } from "sonner";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 //Server action function
 export async function submitFeedBack(prevState: { success: boolean, error: string }, formData: FormData) {
@@ -48,16 +50,26 @@ export async function submitFeedBack(prevState: { success: boolean, error: strin
         success: false,
         error: "Failed to submit feedback"
     }
-}
-
-;
+};
 
 
 export default function NewFeedbackPage() {
+    const router= useRouter();
     const [state, action, isPending] = useActionState(submitFeedBack, {
         success: false,
         error: "",
     });
+
+    //Redirect on success
+    useEffect(() =>{
+        if(state.success){
+            const timer= setTimeout(()=>{
+            router.push("/feedback");
+            }, 1500)//Wait for toast to be visible
+
+            return()=>clearTimeout(timer);
+        }
+    }, [state.success, router])
     return (
         <div className="max-w-2xl mx-auto space-y-6">
             <div className="flex items-center gap-2">
