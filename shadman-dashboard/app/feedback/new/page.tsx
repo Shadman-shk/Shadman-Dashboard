@@ -65,6 +65,7 @@ export default function NewFeedbackPage() {
         if(state.success){
             const timer= setTimeout(()=>{
             router.push("/feedback");
+            
             }, 1500)//Wait for toast to be visible
 
             return()=>clearTimeout(timer);
