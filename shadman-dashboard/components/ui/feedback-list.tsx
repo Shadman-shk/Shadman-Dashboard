@@ -1,8 +1,14 @@
 "use client";
 import { useState } from "react";
 import { Card } from "./card";
-import { CardHeader, CardDescription, CardTitle, } from "./card";
+import { CardHeader, CardDescription, CardTitle, CardContent } from "./card";
 import { User } from "lucide-react";
+import { STATUS_GROUPS } from "@/app/data/status-data";
+import { Badge } from "lucide-react";
+import { getCategoryDesign } from "@/app/data/category-data";
+import { Button } from "./button";
+import { ThumbsUp } from "lucide-react";
+
 
 export default function FeedbackList({
     initialPosts,
@@ -39,15 +45,33 @@ export default function FeedbackList({
                                     const StatusIcon = statusGroup.icon;
 
                                     return (
-                                        <div className="flex items-center gap-1">
-                                            <StatusIcon className="h-4 w-4" />
-                                            <span>{statusGroup.label}</span>
-                                        </div>
+                                        <Badge className="flex items-center gap-1">
+                                            <StatusIcon className="h-3 w-3" />
+                                            <span>{statusGroup.title}</span>
+                                        </Badge>
+                                    );
+                                })()}
+                                {/* Categories Badge*/}
+                                 {(() => {
+                                    const design= getCategoryDesign(post.category)
+                                    const Icon= design.icon;
+
+                                    return (
+                                        <Badge className="flex items-center gap-1">
+                                            variant="outline"
+                                            <Icon className="h-3 w-3" />
+                                            {post.category}
+                                        </Badge>
                                     );
                                 })()}
                             </div>
                         </div>
                     </CardHeader>
+                    <CardContent>
+                       <p className="text-muted-foreground mb-3">
+                        {post.description}
+                       </p>
+                    </CardContent>
                 </Card>
             ))}
         </div >
