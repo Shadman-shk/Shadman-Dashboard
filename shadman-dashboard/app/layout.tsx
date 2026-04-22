@@ -24,11 +24,11 @@ export default async function RootLayout({
 }>) {
   await syncCurrenUser();
   return (
-    
+
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <ClerkProvider>
-          <ThemeProvider 
+          <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
@@ -39,7 +39,7 @@ export default async function RootLayout({
             <main className="container mx-auto px-4 py-8">{children}</main>
             {/* Footer */}
             <Footer />
-            <Toaster richColors/>
+            <Toaster richColors />
           </ThemeProvider>
         </ClerkProvider>
       </body>
