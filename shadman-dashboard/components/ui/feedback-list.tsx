@@ -7,7 +7,8 @@ import { STATUS_GROUPS } from "@/app/data/status-data";
 import { Badge } from "lucide-react";
 import { getCategoryDesign } from "@/app/data/category-data";
 import { Button } from "./button";
-import { ThumbsUp } from "lucide-react";
+import { ThumbsUp, MessageSquare } from "lucide-react";
+import { toast } from "sonner";
 
 
 export default function FeedbackList({
@@ -18,6 +19,61 @@ export default function FeedbackList({
     userId: string | null;
 }) {
     const [posts, setPosts] = useState(initialPosts);
+    const handleVote = async (postId: number) => {
+        if (!userId) {
+            toast.error("Please sign in to vote on feedback");
+            return;
+        }
+
+        //Show loading toast
+        const loadingToast = toast.loading("Submitting vote...")
+
+        try {
+            const response = await fetch("/api/votes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(
+                    {
+                        postId,
+
+                    }
+                ),
+            });
+            if (!response.ok) {
+                throw new Error("Vote failed");
+            }
+
+            const data = await response.json();
+            //Dismiss loading toast and show success
+            toast.dismiss(loadingToast);
+            toast.success(data.voted ? "Vote added" : "Vote removed");
+
+            // Update the local state
+            setPosts(
+                posts.map((post) => {
+                    if (post.id === postId) {
+                        const voteCount = post.votes.length;
+                        return {
+                            ...post,
+                            votes: data.voted ? [...post.vote, { userId }] : post.votes.filter((v: any) => v.userID != userId),
+                            _count: {
+                                votes: data.voted ? voteCount + 1 : voteCount - 1,
+
+                            },
+                        };
+                    }
+                    return post;
+                })
+            )
+        } catch (error) {
+            console.error("Failed to submit vote ", error);
+            //Dismiss loading toast and show success
+            toast.dismiss(loadingToast);
+            toast.error("Failed to submit vote. Please try again");
+        }
+    };
     return (
         <div className="space-y-4">
             {posts.map((post) => (
@@ -52,9 +108,9 @@ export default function FeedbackList({
                                     );
                                 })()}
                                 {/* Categories Badge*/}
-                                 {(() => {
-                                    const design= getCategoryDesign(post.category)
-                                    const Icon= design.icon;
+                                {(() => {
+                                    const design = getCategoryDesign(post.category)
+                                    const Icon = design.icon;
 
                                     return (
                                         <Badge className="flex items-center gap-1">
@@ -68,9 +124,30 @@ export default function FeedbackList({
                         </div>
                     </CardHeader>
                     <CardContent>
-                       <p className="text-muted-foreground mb-3">
-                        {post.description}
-                       </p>
+                        <p className="text-muted-foreground mb-3">
+                            {post.description}
+                        </p>
+
+                        <div className="flex items-center justify-between">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleVote(post.id)}
+                                className="gap-2"
+                            >
+                                <ThumbsUp
+                                    className={`h-4 w-4 ${post.votes.some((v: any) => v.userId === userId)
+                                        ? "fill-current"
+                                        : ""
+                                        }`}
+                                />
+                                {post.votes.length} Votes
+                            </Button>
+                            <div className="text-xs text-muted-foeground hover:text-foreground flex items-center gap-1 transition-colors">
+                                <MessageSquare className="h04 w-4" />
+                                Comment
+                            </div>
+                        </div>
                     </CardContent>
                 </Card>
             ))}
