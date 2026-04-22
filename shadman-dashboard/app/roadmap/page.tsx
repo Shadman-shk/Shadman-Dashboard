@@ -54,7 +54,7 @@ export default async function RoadmapPage() {
                                 <p className="text-sm text-muted-foreground">Total Features</p>
                                 <p className="text-3xl font-bold">{posts.length}</p>
                             </div>
-                            <Target className=" h-20 w-10 text-blue-500"/>
+                            <Target className=" h-20 w-10 text-blue-500" />
                         </div>
                     </CardContent>
                 </Card>
@@ -65,7 +65,7 @@ export default async function RoadmapPage() {
                                 <p className="text-sm text-muted-foreground">Total Votes</p>
                                 <p className="text-3xl font-bold">{totalVotes}</p>
                             </div>
-                            <BarChart2 className=" h-20 w-10 text-purple-500"/>
+                            <BarChart2 className=" h-20 w-10 text-purple-500" />
                         </div>
                     </CardContent>
                 </Card>
@@ -76,7 +76,7 @@ export default async function RoadmapPage() {
                                 <p className="text-sm text-muted-foreground">Completed</p>
                                 <p className="text-3xl font-bold">{groupedPosts.completed.length}</p>
                             </div>
-                            <Target className=" h-20 w-10 text-green-500"/>
+                            <Target className=" h-20 w-10 text-green-500" />
                         </div>
                     </CardContent>
                 </Card>
@@ -87,49 +87,49 @@ export default async function RoadmapPage() {
                                 <p className="text-sm text-muted-foreground">AverageVotes</p>
                                 <p className="text-3xl font-bold">{averageVotes}</p>
                             </div>
-                            <Target className=" h-20 w-10 text-yellow-500"/>
+                            <Target className=" h-20 w-10 text-yellow-500" />
                         </div>
                     </CardContent>
                 </Card>
             </div>
             <Card>
-  <CardHeader>
-    <CardTitle>Roadmap Progress</CardTitle>
-    <CardDescription>
-      Track the journey from idea to completion
-    </CardDescription>
-  </CardHeader>
+                <CardHeader>
+                    <CardTitle>Roadmap Progress</CardTitle>
+                    <CardDescription>
+                        Track the journey from idea to completion
+                    </CardDescription>
+                </CardHeader>
 
-  <CardContent className="space-y-6">
-    <div className="space-y-2">
-      <div className="flex justify-between text-sm">
-        <span>Overall Completion</span>
-        <span className="font-medium">{completedPercentage}%</span>
-      </div>
-         <Progress value={completedPercentage} className="h-2"/>
-         <div className="grid grid-col-3 gap-4">
-            <div className="text-center">
-                <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
-                    {inProgressPercentage}%
-                </div>
-                <div className="text-sm text-muted-foreground">In Progress</div>
-            </div>
-            <div className="text-center">
-                <div className="text-2xl font-bold text-bluee-600 dark:text-blue-400">
-                    {plannedPercentage}%
-                </div>
-                <div className="text-sm text-muted-foreground">In Progress</div>
-            </div>
-         </div>
-         <div className="text-center">
-                <div className="text-2xl font-bold text-green-600 ark:text-green-400">
-                    {completedPercentage}%
-                </div>
-                <div className="text-sm text-muted-foreground">In Progress</div>
-        </div>
-    </div>
-  </CardContent>
-</Card>
+                <CardContent className="space-y-6">
+                    <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                            <span>Overall Completion</span>
+                            <span className="font-medium">{completedPercentage}%</span>
+                        </div>
+                        <Progress value={completedPercentage} className="h-2" />
+                        <div className="grid grid-col-3 gap-4">
+                            <div className="text-center">
+                                <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+                                    {inProgressPercentage}%
+                                </div>
+                                <div className="text-sm text-muted-foreground">In Progress</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-2xl font-bold text-bluee-600 dark:text-blue-400">
+                                    {plannedPercentage}%
+                                </div>
+                                <div className="text-sm text-muted-foreground">In Progress</div>
+                            </div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-2xl font-bold text-green-600 ark:text-green-400">
+                                {completedPercentage}%
+                            </div>
+                            <div className="text-sm text-muted-foreground">In Progress</div>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 }
