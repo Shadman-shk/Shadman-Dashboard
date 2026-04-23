@@ -1,5 +1,4 @@
 import { auth } from "@clerk/nextjs/server"
-import { Redirect } from "next/dist/lib/load-custom-routes"
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import GradientHeader from "@/components/ui/gradient-header";
