@@ -1,8 +1,11 @@
 import prisma from "@/lib/prisma";
 import GradientHeader from "@/components/ui/gradient-header";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Target, BarChart2 } from "lucide-react";
+import { Target, BarChart2, Icon, BarChart3 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { STATUS_GROUPS, STATUS_ORDER } from "../data/status-data";
+import { Badge } from "lucide-react";
+import { Clock, CheckCircle } from "lucide-react";
 
 function getStatusPercentage(posts: any, status: string) {
     const total = posts.length;
@@ -76,7 +79,7 @@ export default async function RoadmapPage() {
                                 <p className="text-sm text-muted-foreground">Completed</p>
                                 <p className="text-3xl font-bold">{groupedPosts.completed.length}</p>
                             </div>
-                            <Target className=" h-20 w-10 text-green-500" />
+                            <CheckCircle className=" h-20 w-10 text-green-500" />
                         </div>
                     </CardContent>
                 </Card>
@@ -87,7 +90,7 @@ export default async function RoadmapPage() {
                                 <p className="text-sm text-muted-foreground">AverageVotes</p>
                                 <p className="text-3xl font-bold">{averageVotes}</p>
                             </div>
-                            <Target className=" h-20 w-10 text-yellow-500" />
+                            <BarChart3 className=" h-20 w-10 text-yellow-500" />
                         </div>
                     </CardContent>
                 </Card>
@@ -130,6 +133,68 @@ export default async function RoadmapPage() {
                     </div>
                 </CardContent>
             </Card>
+            <div className="lg:grid grid-cols-1 lg:grid-cols-4 gap-6">
+                {STATUS_ORDER.map((status) => {
+                    const group = STATUS_GROUPS[status as keyof typeof STATUS_GROUPS];
+                    const Icon = group.icon;
+                    const postInGroup = groupedPosts[status as keyof typeof groupedPosts]
+
+                    return (
+                        <div key={status} className="space-y-4">
+                            <div className={`rounded-lg p-4 ${group.bgColor} border ${group.color}`}>
+                                <div className="clex items-center justify-between mb-2">
+                                    <div className="flex item-center gap-2">
+                                        <Icon className={`h-5 w-5 ${group.textColor}`} />
+                                        <h2 className={`text-lg font-semibold ${group.textColor}`}>{group.title}</h2>
+                                        <Badge className={group.countColor}>
+                                            {postInGroup.length}
+                                        </Badge>
+                                        <p className="text-sm text-muted-foreground">{group.description}</p>
+                                    </div>
+                                    <div className="space-y-3">
+                                        {postInGroup.map((post) => (
+                                            <Card
+                                                key={post.id}
+                                                className={` border-l-4 ${group.color} hover: shadow-lg transition-all duration-200 hover:translate-y-1 cursor-pointer`}>
+                                                <CardHeader className="pb-3 ">
+                                                    <CardTitle className="text-sm font-medium">{post.title}</CardTitle>
+                                                    <CardDescription>{post.author.name}| {post.votes.length} votes</CardDescription>
+                                                </CardHeader>
+                                                <CardContent className="pb-3">
+                                                    <div className="flex justify-between items-center">
+                                                        <Badge className="text-xs">{post.category}</Badge>
+                                                        {status === "in_progress" && (
+                                                            <div className="flex items-center gap-1 text-xs text-yellow-600">
+                                                                <Clock className="h-3 w-3" />
+                                                                Active
+                                                            </div>
+                                                        )}
+                                                        {status === "completed" && (
+                                                            <div className="flex items-center gap-1 text-xs text-yellow-600">
+                                                                <CheckCircle className="h-3 w-3" />
+                                                                Shipped
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        ))}
+                                        {postInGroup.length === 0 && (
+                                            <Card className="border-dashed opacity-60">
+                                                <CardContent className="py-8 text-center">
+                                                    <p className="text-sm text-muted-foreground">
+                                                        No items in this stage
+                                                    </p>
+                                                </CardContent>
+                                            </Card>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     );
 }
