@@ -9,7 +9,8 @@ import { Clock, CheckCircle } from "lucide-react";
 
 function getStatusPercentage(posts: any, status: string) {
     const total = posts.length;
-    const count = posts.filter((p: { status: string; }) => p.status === status);
+    const count = posts.filter((p: { status: string; }) => p.status === status).length;
+    console.log(`Total : ${total}, count :${count}, per: {total > 0 ? Math.round(count / total * 100) : 0}`)
     return total > 0 ? Math.round(count / total * 100) : 0;
 }
 export default async function RoadmapPage() {
@@ -20,7 +21,7 @@ export default async function RoadmapPage() {
             votes: true,
         },
         orderBy: {
-            votes: {
+            votes:{
                 _count: "desc"
             },
         },
